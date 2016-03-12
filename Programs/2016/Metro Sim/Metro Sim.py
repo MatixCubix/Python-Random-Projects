@@ -109,8 +109,8 @@ class Train:
              self.station_docked = None
 
     def set_target(self,Line):
+        print("What a")
         pass
-
 
     def go_to_target(self, Line, dt):
         pass
