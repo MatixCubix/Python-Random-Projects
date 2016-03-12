@@ -27,7 +27,7 @@ Repositorio personal para cosas random de python :)
                         ,-' 
 
 
-	[Guau Guau](https://www.youtube.com/watch?v=J7UwSVsiwzI)
+[[Guau Guau|https://www.youtube.com/watch?v=J7UwSVsiwzI]] 
 
 
-Salu3
+Salu3.
