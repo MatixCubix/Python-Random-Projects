@@ -1,0 +1,26 @@
+def vecinos(self): #Devuelve lista de listas de posicion de vecinos(8 max por celula viva)
+        self.vecinos = []
+        direcciones = [[1,0],[0,1],[1,1],[-1,0],[0,-1],[-1,-1],[1,-1],[-1,1]]
+        for i in range(len(self.posicion_vivas)):
+            self.vecinos.append([])
+            for k in range(8):
+                u = self.posicion_vivas[i][0] + direcciones[k][0]
+                v = self.posicion_vivas[i][1] + direcciones[k][1]
+                if self.out(v,u) == False:
+                    self.vecinos[i].append([u,v])
+
+def vecinos_t(self): #Entrega lista de todos los vecinos ignorando las vivas
+        self.vecinos_comun = []
+        for i in range(len(self.vecinos)):
+            for k in range(len(self.vecinos[i])):
+                self.vecinos_comun.append(self.vecinos[i][k])
+
+def vecinos(self): #Devuelve lista de vecinos de cada celula viva
+        self.vecinos = []
+        direcciones = [[1,0],[0,1],[1,1],[-1,0],[0,-1],[-1,-1],[1,-1],[-1,1]]
+        for i in range(len(self.posicion_vivas)):
+            for k in range(8):
+                u = self.posicion_vivas[i][0] + direcciones[k][0]
+                v = self.posicion_vivas[i][1] + direcciones[k][1]
+                if self.out(v,u) == False:
+                    self.vecinos.append([u,v])        
