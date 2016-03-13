@@ -2,7 +2,6 @@ Names = ["Diego","Matias","Carlos","Micha","Carlita","Samantha","Eduardo","Camil
 StationNames = ["Mordor","Narnia","Pluton","Alfa Centauri"]
 StationPosition = [0, 2000, 5000, 8000]
 LineName = "1"
-Annex = [(0,1),(1,2),(2,3)]
 
 class Train:
     def __init__(self, number, max_speed, direction, door_length, door_time, length, acceleration, initialPosition = 0):
@@ -85,19 +84,16 @@ class Train:
             else:
                 self.close_doors()
 
-    def dock_station(self, Line):
-        if self.stopped:
-            for station in Line.stations:
-                if station.position == round(self.position):
-                    if self.direction == 0 and station.docked_trains[0] == None:
-                        station.docked_trains[0] = self
-                        self.station_docked = station
-                        self.docked = True
-                    elif self.direction == 1 and station.docked_trains[1] == None:
-                        station.docked_trains[1] = self
-                        self.station_docked = station
-                        self.docked = True
-                break
+    def dock_station(self, station):
+        if self.direction == 0 and station.docked_trains[0] == None:
+            station.docked_trains[0] = self
+            self.station_docked = station
+            self.docked = True
+        elif self.direction == 1 and station.docked_trains[1] == None:
+            station.docked_trains[1] = self
+            self.station_docked = station
+            self.docked = True
+
 
     def undock_station(self,Line):
          if self.docked:
@@ -108,11 +104,31 @@ class Train:
              self.docked = False
              self.station_docked = None
 
-    def set_target(self,Line):
-        pass
+    def set_target(self,Line,dt):
+        if self.direction == 0:
+            for station in Line.stations:
+                if self.position < station.position +2*dt:
+                    self.target = station
+                    break
+        else:
+            for station in Line.stations:
+                if self.position > station.position -2*dt:
+                    self.target = station
+                    break
 
     def go_to_target(self, Line, dt):
-        pass
+        if type(self.target) == Station:
+            self.check_stop()
+            if self.stopped and not self.docked:
+                distance = self.position - self.target.position
+                if round(distance) == 0:
+                    self.position = self.target.position
+                    self.dock_station()
+            elif not self.stopped:
+                self.emergency_break(dt)
+            self.open_close_doors(dt)
+        else:
+            self.set_target(Line)
 
 
 class Line:
